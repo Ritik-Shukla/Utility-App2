@@ -1,10 +1,25 @@
-const { createSlice } = require("@reduxjs/toolkit")
+const { createSlice, createAsyncThunk } = require("@reduxjs/toolkit")
 
 
 const initialState={
     todos:[
     ]
 }
+export const getInitialStateAsync = createAsyncThunk(
+    "todo/getInitialState",
+    (Arg,thunkAPI)=>{
+        fetch("http://localhost:4100/api/todos")
+        .then(res => res.json())
+        .then(data => {
+          thunkAPI.dispatch(actions.setInitialState(data))
+        })
+        .catch(error => {
+          console.error("Error fetching data:", error);
+        });
+    }
+)
+
+
 
 // Creating Reducer using Redux Toolkit
 

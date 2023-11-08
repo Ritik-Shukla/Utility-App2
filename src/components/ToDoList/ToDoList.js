@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 // import { toggleTodo } from "../../redux/actions/todoActions";
-import { actions } from "../../redux/reducers/todoReducer";
+import { actions, getInitialStateAsync } from "../../redux/reducers/todoReducer";
 import { todoSelector } from "../../redux/reducers/todoReducer";
 import styles from "./ToDoList.module.css";
 import {useEffect} from "react";
@@ -13,14 +13,15 @@ function ToDoList() {
   // const todos= store.getState().todos;
 
   useEffect(() => {
-    fetch("http://localhost:4100/api/todos")
-    .then(res => res.json())
-    .then(data => {
-      dispatch(actions.setInitialState(data));
-    })
-    .catch(error => {
-      console.error("Error fetching data:", error);
-    });
+    dispatch(getInitialStateAsync())
+    // fetch("http://localhost:4100/api/todos")
+    // .then(res => res.json())
+    // .then(data => {
+    //   dispatch(actions.setInitialState(data));
+    // })
+    // .catch(error => {
+    //   console.error("Error fetching data:", error);
+    // });
 }
   , []);
 
