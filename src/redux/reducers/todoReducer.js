@@ -11,15 +11,30 @@ export const getInitialStateAsync = createAsyncThunk(
         fetch("http://localhost:4100/api/todos")
         .then(res => res.json())
         .then(data => {
-          thunkAPI.dispatch(actions.setInitialState(data))
-        })
-        .catch(error => {
-          console.error("Error fetching data:", error);
-        });
+        thunkAPI.dispatch(actions.setInitialState(data))
+    //   dispatch(actions.setInitialState(data));
+    })
+    .catch(error => {
+      console.error("Error fetching data:", error);
+    });
     }
 )
 
-
+// export const addTodoAsync = createAsyncThunk("todo/addTodo",
+// async (payload)=>{
+//     const response = await fetch("http://localhost:4100/api/todos",{
+//         method:"POST",
+//         headers:{
+//             "content-type":"application/json"
+//         },
+//         body:JSON.stringify({
+// text:payload,
+// completed:false
+//         })
+//     })
+//     return response.json()
+// }
+// )
 
 // Creating Reducer using Redux Toolkit
 
@@ -28,8 +43,8 @@ const todoSlice = createSlice({
     initialState:initialState,
     reducers:{
     
-        setInitialState:(stte,action)=>{
-           stte.todos=[...action.payload]
+        setInitialState:(state,action)=>{
+           state.todos=[...action.payload]
         },
 
 
@@ -50,6 +65,13 @@ const todoSlice = createSlice({
             })
         }
     }
+
+    // extraReducers:(builder)=>{
+    //     builder.addCase(addTodoAsync.fulfilled,(state,action)=>{
+    //         console.log(action.payload)
+    //         state.todos.push(action.payload)
+    //     })
+    // }
 });
 
 export const todoReducer=todoSlice.reducer;
